@@ -26,8 +26,8 @@ class NewVisitorTest(unittest.TestCase):
         # She is invited to enter a to-do item straight away
         inputbox = self.browser.find_element(By.ID, 'id_new_item')
         self.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
-        # She types "Buy feathers" into a text box
-        inputbox.send_keys('Buy feathers')
+        # She types "Buy flowers" into a text box
+        inputbox.send_keys('Buy flowers')
         # When she hits enter, the page updates, and now the page lists
         # "1: Buy feathers" as an item in a to-do list
         inputbox.send_keys(Keys.ENTER)
@@ -35,7 +35,7 @@ class NewVisitorTest(unittest.TestCase):
 
         table = self.browser.find_element(By.ID, 'id_list_table')
         rows = table.find_elements(By.TAG_NAME, 'tr')
-        self.assertIn('1: Buy feathers', [row.text for row in rows])
+        self.assertIn('1: Buy flowers', [row.text for row in rows])
 
         # There is still a text box inviting her to add another item.
         # She enters "gift to girlfriend"
