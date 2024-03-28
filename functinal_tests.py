@@ -24,23 +24,27 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('To-Do', header_text)
 
         # She is invited to enter a to-do item straight away
+        # She types "Buy flowers" into a text box
+        # When she hits enter, the page updates, and now the page lists
+        # "1: Buy flowers" as an item in a to-do list
         inputbox = self.browser.find_element(By.ID, 'id_new_item')
         self.assertEqual(inputbox.get_attribute('placeholder'), 'Enter a to-do item')
-        # She types "Buy flowers" into a text box
         inputbox.send_keys('Buy flowers')
-        # When she hits enter, the page updates, and now the page lists
-        # "1: Buy feathers" as an item in a to-do list
+        inputbox.send_keys(Keys.ENTER)
+        time.sleep(1)
+        # 页面中又显示了一个文本框，可以输入其他的待办事项
+        # 她输入了"Give a gift to Lisi"
+        inputbox = self.browser.find_element(By.ID, 'id_new_item')
+        inputbox.send_keys('Give a gift to Lisi')
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
         table = self.browser.find_element(By.ID, 'id_list_table')
         rows = table.find_elements(By.TAG_NAME, 'tr')
         self.assertIn('1: Buy flowers', [row.text for row in rows])
+        self.assertIn('2: Give a gift to Lisi', [row.text for row in rows])
 
-        # There is still a text box inviting her to add another item.
-        # She enters "gift to girlfriend"
         self.fail('Finish the test!')
-        # The page updates again, and now shows both items on her list
 
 
 if __name__ == '__main__':
